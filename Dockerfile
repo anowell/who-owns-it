@@ -10,5 +10,5 @@ ADD app /gopath/src/app/
 RUN /bin/go-build
 
 EXPOSE 8080
-CMD []
-ENTRYPOINT ["/bin/go-run"]
+#CMD []
+CMD ["/bin/go-run"]

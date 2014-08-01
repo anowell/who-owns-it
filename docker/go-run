@@ -2,7 +2,9 @@
 
 set -e
 
-if [ -f /gopath/src/app/.godir ]; then
+if [ "$1" = "dev" ]; then
+  go run /gopath/src/app/server.go
+elif [ -f /gopath/src/app/.godir ]; then
     GODIR=$(cat /gopath/src/app/.godir)
     GOBIN=/gopath/bin/$(basename ${GODIR})
 else

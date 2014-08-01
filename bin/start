@@ -5,13 +5,12 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 cd $DIR
 
-WHOPORT=${WHOPORT:-8080}
+WHO_PORT=${WHO_PORT:-8080}
 TAG=who-owns-it
 
-docker build -q -t $TAG --rm .
+docker build -t $TAG --rm .
 
-# Bind mount ./db as /data - should contain our JSON flat files
-# Bind mount ./src as /go/src/who-owns so that we can do live-reloads of the container
-echo docker run $1 -i -v $DIR/data:/data -v $DIR/app:/go/src/app -p 8080:$WHOPORT $TAG 
-
-echo "who-owns-it server running on port $WHOPORT."
+# Bind mount ./data - should contain our JSON flat files
+# Bind mount ./app - to live-reloads of the container for development
+echo "Starting who-owns-it server on port $WHO_PORT..."
+docker run -t -i -v $DIR/data:/data -v $DIR/app:/gopath/src/app -p 8080:$WHO_PORT $TAG /bin/go-run dev

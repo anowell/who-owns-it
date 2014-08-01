@@ -23,18 +23,24 @@ func main() {
 }
 
 func loadTeams() () {
-  path:= []string{os.Getenv("DATA_DIR"), "teams.json"}
-  data, err := ioutil.ReadFile(strings.Join(path, ""))
+  path:= strings.Join([]string{os.Getenv("DATA_DIR"), "/teams.json"}, "")
+  data, err := ioutil.ReadFile(path)
   if err == nil && data != nil {
       err = json.Unmarshal(data, &teams)
+  }
+  if err != nil {
+    fmt.Println("Error - Failed to load teams via", path)
   }
 }
 
 func loadProjects() () {
-  path:= []string{os.Getenv("DATA_DIR"), "projects.json"}
-  data, err := ioutil.ReadFile(strings.Join(path, ""))
+  path:= strings.Join([]string{os.Getenv("DATA_DIR"), "/projects.json"}, "")
+  data, err := ioutil.ReadFile(path)
   if err == nil && data != nil {
       err = json.Unmarshal(data, &projects)
+  }
+  if err != nil {
+    fmt.Println("Error - Failed to load projects via", path)
   }
 }
 
@@ -50,7 +56,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getResponse(query string) (string, error){
-  log.Println("Looking up owner of:", query)
+  log.Println("Looking up owner of :", query)
   project, err := getProjectByName(query)
   if err != nil {
     return "", err
