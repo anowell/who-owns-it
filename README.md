@@ -33,14 +33,11 @@ Create data/projects.json
 Start who-owns-it server in a docker container. This bind mounts the data directory into the container which doesn't "just work" for remote docker hosts (e.g. Boot2Doc - sorry Mac users). It also bind mounts the app directory and runs it via 'go run' so that you can make changes, and simply restart your docker container for them to take effect.
     
     $ bin/start
-
-Now you can curl it:
-
     $ curl -s $DOCKER_HOST:8080/whoowns
-    {"Project":"who-owns-it","Team":"Team Awesome","Email":"
+    {"Project":"who-owns-it","Team":"Team Awesome","Email":"team-awesome@example.com","Members":["Anthony Nowell"],"Aliases":["whoowns", "who-owns", "whoownsit", "ownership"]}
     
     
 Alternatively, you can run this outside of Docker
   
     $ DATA_DIR=`pwd`/data go run app/server.go
-    $ curl localhost:8080/whoowns 
+    $ curl -s localhost:8080/whoowns 
